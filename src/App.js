@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Button } from "react-bootstrap"
 import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css"
+import { connect } from "react-redux" // Connette il componente a redux
 
-function App() {
+
+const mapStateToProps = (state) => ({...state})
+
+const mapDispatchToProps = (dispatch) => ({  
+  increment: () => { // Action creator
+    dispatch({
+      type: 'INCREMENT'
+    })
+  },
+
+  decrement: () => { // Action creator
+    dispatch({
+      type: 'DECREMENT'
+    })
+  }
+})
+
+function App(props) {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      {console.log(props)}
+      <header className="App-header" style={{fontSize: "5em"}} >
+        <Button variant="info" onClick={props.increment}>
+          +
+        </Button>
+        {props.count}
+        <Button variant="info" onClick={props.decrement}>
+          -
+        </Button>
       </header>
     </div>
   );
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps) (App);
